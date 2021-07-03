@@ -1,3 +1,7 @@
 /*
 This css file is a placeholder. Use this or roll your own, choice is yours.
 */
+.flag {
+  max-height: 2em;
+  border-width: 1px;
+}
