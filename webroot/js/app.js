@@ -19,11 +19,23 @@ var Search = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
 
+    _this.handleSearch = function (term) {
+      var search_string = new URLSearchParams({ search_term: term }).toString();
+      fetch('http://localhost:8765/api/index.php?' + search_string, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        _this.setState({ results: data.results, searched: true });
+      });
+    };
+
     _this.state = {
       results: [],
       searched: false
     };
-    _this.handleSearch = _this.handleSearch.bind(_this);
     return _this;
   }
 
@@ -36,22 +48,6 @@ var Search = function (_React$Component) {
         React.createElement(SearchBar, { onSearch: this.handleSearch }),
         this.state.searched && React.createElement(SearchResults, { results: this.state.results })
       );
-    }
-  }, {
-    key: 'handleSearch',
-    value: function handleSearch(term) {
-      var _this2 = this;
-
-      var search_string = new URLSearchParams({ search_term: term }).toString();
-      fetch('http://localhost:8765/api/index.php?' + search_string, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(function (response) {
-        return response.json();
-      }).then(function (data) {
-        _this2.setState({ results: data.results, searched: true });
-      });
     }
   }]);
 

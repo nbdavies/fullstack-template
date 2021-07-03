@@ -25,6 +25,6 @@
    $code_results = array();
  }
  $unique_results = $name_results + $fullname_results + $code_results;
- # Sort by population
+ usort($unique_results, function ($a, $b) { return $b['population'] - $a['population']; });
  
  echo json_encode(['results' => $unique_results]);

@@ -10,7 +10,6 @@ class Search extends React.Component {
       results: [],
       searched: false
     }
-    this.handleSearch = this.handleSearch.bind(this);
   }
 
   render() {
@@ -24,7 +23,7 @@ class Search extends React.Component {
     )
   }
 
-  handleSearch(term){
+  handleSearch = (term) => {
     let search_string = new URLSearchParams({ search_term: term }).toString()
     fetch('http://localhost:8765/api/index.php?' + search_string, {
       headers: {
@@ -32,7 +31,9 @@ class Search extends React.Component {
       }
     })
       .then(response => response.json())
-      .then(data => { this.setState({ results: data.results, searched: true }) })
+      .then(data => {
+        this.setState({ results: data.results, searched: true })
+      })
   }
 }
 

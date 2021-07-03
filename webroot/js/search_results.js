@@ -9,117 +9,194 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var SearchResults = function (_React$Component) {
   _inherits(SearchResults, _React$Component);
 
-  function SearchResults() {
+  function SearchResults(props) {
     _classCallCheck(this, SearchResults);
 
-    return _possibleConstructorReturn(this, (SearchResults.__proto__ || Object.getPrototypeOf(SearchResults)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (SearchResults.__proto__ || Object.getPrototypeOf(SearchResults)).call(this, props));
+
+    _this.countRegions();
+    _this.countRegions();
+    return _this;
   }
 
   _createClass(SearchResults, [{
+    key: 'countRegions',
+    value: function countRegions() {
+      var regionCounts = {};
+      var subregionCounts = {};
+      this.props.results.forEach(function (result) {
+        var region = result.region;
+        regionCounts[region] = (regionCounts[region] || 0) + 1;
+        subregionCounts[region] = subregionCounts[region] || {};
+        var subregion = result.subregion;
+        subregionCounts[region][subregion] = (subregionCounts[region][subregion] || 0) + 1;
+      });
+      this.state = { regionCounts: regionCounts, subregionCounts: subregionCounts };
+    }
+  }, {
     key: 'render',
     value: function render() {
-      console.log(this.props.results);
+      var _this2 = this;
+
       if (this.props.results.length > 0) {
         return React.createElement(
-          'table',
-          { className: 'table' },
+          'div',
+          { className: 'row' },
           React.createElement(
-            'thead',
-            null,
+            'table',
+            { className: 'table' },
             React.createElement(
-              'tr',
+              'thead',
               null,
               React.createElement(
-                'th',
-                null,
-                'Full name'
-              ),
-              React.createElement(
-                'th',
-                null,
-                'Alpha 2 code'
-              ),
-              React.createElement(
-                'th',
-                null,
-                'Alpha 3 code'
-              ),
-              React.createElement(
-                'th',
-                null,
-                'Flag'
-              ),
-              React.createElement(
-                'th',
-                null,
-                'Region'
-              ),
-              React.createElement(
-                'th',
-                null,
-                'Subregion'
-              ),
-              React.createElement(
-                'th',
-                null,
-                'Population'
-              ),
-              React.createElement(
-                'th',
-                null,
-                'Languages'
-              )
-            )
-          ),
-          React.createElement(
-            'tbody',
-            null,
-            this.props.results.map(function (result) {
-              return React.createElement(
                 'tr',
-                { key: result.alpha2Code },
+                null,
                 React.createElement(
-                  'td',
+                  'th',
                   null,
-                  result.name
+                  'Full name'
                 ),
                 React.createElement(
-                  'td',
+                  'th',
                   null,
-                  result.alpha2Code
+                  'Alpha 2 code'
                 ),
                 React.createElement(
-                  'td',
+                  'th',
                   null,
-                  result.alpha3Code
+                  'Alpha 3 code'
                 ),
                 React.createElement(
-                  'td',
+                  'th',
                   null,
-                  React.createElement('img', { src: result.flag, className: 'flag border' })
+                  'Flag'
                 ),
                 React.createElement(
-                  'td',
+                  'th',
                   null,
-                  result.region
+                  'Region'
                 ),
                 React.createElement(
-                  'td',
+                  'th',
                   null,
-                  result.subregion
+                  'Subregion'
                 ),
                 React.createElement(
-                  'td',
+                  'th',
                   null,
-                  result.population
+                  'Population'
                 ),
                 React.createElement(
-                  'td',
+                  'th',
                   null,
-                  result.languages.map(function (language) {
-                    return language.name;
-                  }).join(', ')
+                  'Languages'
                 )
+              )
+            ),
+            React.createElement(
+              'tbody',
+              null,
+              this.props.results.map(function (result) {
+                return React.createElement(
+                  'tr',
+                  { key: result.alpha2Code },
+                  React.createElement(
+                    'td',
+                    null,
+                    result.name
+                  ),
+                  React.createElement(
+                    'td',
+                    null,
+                    result.alpha2Code
+                  ),
+                  React.createElement(
+                    'td',
+                    null,
+                    result.alpha3Code
+                  ),
+                  React.createElement(
+                    'td',
+                    null,
+                    React.createElement('img', { src: result.flag, className: 'flag border' })
+                  ),
+                  React.createElement(
+                    'td',
+                    null,
+                    result.region
+                  ),
+                  React.createElement(
+                    'td',
+                    null,
+                    result.subregion
+                  ),
+                  React.createElement(
+                    'td',
+                    null,
+                    result.population
+                  ),
+                  React.createElement(
+                    'td',
+                    null,
+                    result.languages.map(function (language) {
+                      return language.name;
+                    }).join(', ')
+                  )
+                );
+              })
+            ),
+            React.createElement(
+              'tfoot',
+              null,
+              React.createElement(
+                'tr',
+                null,
+                React.createElement(
+                  'th',
+                  null,
+                  'Total'
+                ),
+                React.createElement(
+                  'td',
+                  null,
+                  this.props.results.length
+                )
+              )
+            ),
+            Object.keys(this.state.regionCounts).map(function (region) {
+              return React.createElement(
+                'tfoot',
+                { key: region },
+                React.createElement(
+                  'tr',
+                  null,
+                  React.createElement(
+                    'th',
+                    null,
+                    region
+                  ),
+                  React.createElement(
+                    'td',
+                    null,
+                    _this2.state.regionCounts[region]
+                  )
+                ),
+                Object.keys(_this2.state.subregionCounts[region]).map(function (subregion) {
+                  return React.createElement(
+                    'tr',
+                    { key: subregion },
+                    React.createElement(
+                      'td',
+                      null,
+                      subregion
+                    ),
+                    React.createElement(
+                      'td',
+                      null,
+                      _this2.state.subregionCounts[region][subregion]
+                    )
+                  );
+                })
               );
             })
           )
