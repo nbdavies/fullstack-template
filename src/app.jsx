@@ -32,7 +32,7 @@ class Search extends React.Component {
       }
     })
       .then(response => response.json())
-      .then(data => { this.setState({ results: JSON.parse(data.results), searched: true }) })
+      .then(data => { this.setState({ results: data.results, searched: true }) })
   }
 }
 

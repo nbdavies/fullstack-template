@@ -50,7 +50,7 @@ var Search = function (_React$Component) {
       }).then(function (response) {
         return response.json();
       }).then(function (data) {
-        _this2.setState({ results: JSON.parse(data.results), searched: true });
+        _this2.setState({ results: data.results, searched: true });
       });
     }
   }]);
